@@ -3,28 +3,57 @@
 const Product = require('../models/product')
 
 const getAllProductsStatic = async (req, res, next) => {
-    throw new Error('express testing error')
+
+    const products = await Product.find({}).sort("-name price").select("name price")
     res.status(200).send({
-        msg: "products testing route"
+        "Number of producs": products.length,
+        products
     })
 }
 
 const getAllProducts = async (req, res, next) => {
 
-    const {featured, company, name} = req.query
+    const {featured, company, name, sort, fields} = req.query
     const queryObj = {}
 
+    // select feature of the product
     if (featured) {
         queryObj.featured = featured === "true" ? true : false
     } 
+
+    // select company of the product
     if (company) {
         queryObj.company = company
     }
+
+    // the search for the product name
     if (name) {
-        queryObj.name = name
+        queryObj.name =  {
+            $regex: name,
+            $options: "i"
+        }
     }
 
-    const products = await Product.find(queryObj)
+    let result = Product.find(queryObj)
+
+    // sort
+    if (sort) {
+        // customize sorting
+        const sortList = sort.split(',').join(' ')
+        result = result.sort(sortList)
+    } else {
+        // default sort
+        result = result.sort('created_at')
+    }
+
+    // fields
+    if (fields) {
+        const fieldsList = fields.split(',').join(' ')
+        result = result.select(fieldsList)
+    }
+
+    // fetch products
+    const products = await result
 
     res.status(200).send({
         "Number of producs": products.length,
