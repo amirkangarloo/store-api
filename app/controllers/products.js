@@ -2,15 +2,6 @@
 
 const Product = require('../models/product')
 
-const getAllProductsStatic = async (req, res, next) => {
-
-    const products = await Product.find({}).sort("-name price").select("name price")
-    res.status(200).send({
-        "Number of producs": products.length,
-        products
-    })
-}
-
 const getAllProducts = async (req, res, next) => {
 
     const {
@@ -98,6 +89,5 @@ const getAllProducts = async (req, res, next) => {
 }
 
 module.exports = {
-    getAllProducts,
-    getAllProductsStatic
+    getAllProducts
 }
