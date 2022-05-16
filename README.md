@@ -55,6 +55,25 @@ npm start
 | :------------: | :------------: | :------------: |
 |  GET |  api/v1/products |  Get a list of products |
 
+## Create data
+
+In this project, for testing router can use test data. **create-data folder** include 2 files.
+
+### **1. products.json**
+
+This file has 23 product data.
+
+### **2. import-data-into-database.js**
+
+**WARNING:** If using this file first **delete** all documents in mongo and after that, Create products data. (products.json).
+
+------------
+
+**usage:** run command below
+
+    node .\create-data\import-data-into-database.js
+
+
 ## Options
 
 ## License
