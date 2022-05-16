@@ -49,7 +49,11 @@ Make **.env** file. like a below:
 npm start
 ```
 
-## Route
+## Route API
+
+| **HTTP Method**  | **Route**  | **Result**  |
+| :------------: | :------------: | :------------: |
+|  GET |  api/v1/products |  Get a list of products |
 
 ## Options
 
